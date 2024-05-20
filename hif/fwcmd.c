@@ -94,7 +94,6 @@ char *mwl_fwcmd_get_cmd_string(unsigned short cmd)
 		{ HOSTCMD_CMD_GET_DEVICE_PWR_TBL, "GetDevicePwrTbl" },
 		{ HOSTCMD_CMD_SET_RATE_DROP, "SetRateDrop" },
 		{ HOSTCMD_CMD_NEWDP_DMATHREAD_START, "NewdpDMAThreadStart" },
-		{ HOSTCMD_CMD_GET_FW_REGION_CODE_SC4, "GetFwRegionCodeSC4" },
 		{ HOSTCMD_CMD_GET_DEVICE_PWR_TBL_SC4, "GetDevicePwrTblSC4" },
 		{ HOSTCMD_CMD_QUIET_MODE, "QuietMode" },
 		{ HOSTCMD_CMD_CORE_DUMP_DIAG_MODE, "CoreDumpDiagMode" },
@@ -3449,43 +3448,6 @@ int mwl_fwcmd_newdp_dmathread_start(struct ieee80211_hw *hw)
 		mutex_unlock(&priv->fwcmd_mutex);
 		return -EIO;
 	}
-
-	mutex_unlock(&priv->fwcmd_mutex);
-
-	return 0;
-}
-
-
-int mwl_fwcmd_get_fw_region_code_sc4(struct ieee80211_hw *hw,
-				     u32 *fw_region_code)
-{
-	struct mwl_priv *priv = hw->priv;
-	struct hostcmd_cmd_get_fw_region_code_sc4 *pcmd;
-	u16 cmd;
-
-	pcmd = (struct hostcmd_cmd_get_fw_region_code_sc4 *)&priv->pcmd_buf[0];
-
-	mutex_lock(&priv->fwcmd_mutex);
-
-	memset(pcmd, 0x00, sizeof(*pcmd));
-	cmd = HOSTCMD_CMD_GET_FW_REGION_CODE_SC4;
-	pcmd->cmd_hdr.cmd = cpu_to_le16(cmd);
-	pcmd->cmd_hdr.len = cpu_to_le16(sizeof(*pcmd));
-
-	if (mwl_hif_exec_cmd(hw, cmd)) {
-		mutex_unlock(&priv->fwcmd_mutex);
-		return -EIO;
-	}
-
-	if (pcmd->cmd_hdr.result != 0) {
-		mutex_unlock(&priv->fwcmd_mutex);
-		return -EINVAL;
-	}
-
-	if (pcmd->status)
-		*fw_region_code = (pcmd->status == 1) ? 0 : pcmd->status;
-	else
-		*fw_region_code = le32_to_cpu(pcmd->fw_region_code);
 
 	mutex_unlock(&priv->fwcmd_mutex);
 
