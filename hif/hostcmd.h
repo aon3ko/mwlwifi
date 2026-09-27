@@ -73,7 +73,6 @@
 #define HOSTCMD_CMD_GET_DEVICE_PWR_TBL          0x116B
 #define HOSTCMD_CMD_SET_RATE_DROP               0x1172
 #define HOSTCMD_CMD_NEWDP_DMATHREAD_START       0x1189
-#define HOSTCMD_CMD_GET_FW_REGION_CODE_SC4      0x118A
 #define HOSTCMD_CMD_GET_DEVICE_PWR_TBL_SC4      0x118B
 #define HOSTCMD_CMD_QUIET_MODE                  0x1201
 #define HOSTCMD_CMD_CORE_DUMP_DIAG_MODE         0x1202
@@ -1108,13 +1107,6 @@ struct hostcmd_cmd_set_rate_drop {
 /* HOSTCMD_CMD_NEWDP_DMATHREAD_START */
 struct hostcmd_cmd_newdp_dmathread_start {
 	struct hostcmd_header cmd_hdr;
-} __packed;
-
-/* HOSTCMD_CMD_GET_FW_REGION_CODE_SC4 */
-struct hostcmd_cmd_get_fw_region_code_sc4 {
-	struct hostcmd_header cmd_hdr;
-	__le32 status; /* 0 = Found, 1 = Error */
-	__le32 fw_region_code;
 } __packed;
 
 /* HOSTCMD_CMD_GET_DEVICE_PWR_TBL_SC4 */

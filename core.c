@@ -887,11 +887,7 @@ static int mwl_wl_init(struct mwl_priv *priv)
 		mwl_fwcmd_get_txpwrlmt_cfg_data(hw);
 	}
 
-	if (priv->chip_type == MWL8964)
-		rc = mwl_fwcmd_get_fw_region_code_sc4(hw,
-						      &priv->fw_region_code);
-	else
-		rc = mwl_fwcmd_get_fw_region_code(hw, &priv->fw_region_code);
+	rc = mwl_fwcmd_get_fw_region_code(hw, &priv->fw_region_code);
 	if (!rc) {
 		priv->fw_device_pwrtbl = true;
 		mwl_regd_init(priv);

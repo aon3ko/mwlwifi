@@ -253,9 +253,6 @@ int mwl_fwcmd_set_rate_drop(struct ieee80211_hw *hw, int enable,
 
 int mwl_fwcmd_newdp_dmathread_start(struct ieee80211_hw *hw);
 
-int mwl_fwcmd_get_fw_region_code_sc4(struct ieee80211_hw *hw,
-				     u32 *fw_region_code);
-
 int mwl_fwcmd_get_pwr_tbl_sc4(struct ieee80211_hw *hw,
 			      struct mwl_device_pwr_tbl *device_ch_pwrtbl,
 			      u8 *region_code,
